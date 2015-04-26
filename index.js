@@ -1,19 +1,19 @@
 #!/bin/sh
 ':' //; exec "$(command -v node)" "$0" "$@"
 
-var MAX_COCURRENCY = 256;
+var MAX_COCURRENCY = 255;
 
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
-var open = require('open');
-var request = require('request');
-var queue = require('block-queue');
-var shuffle = require('knuth-shuffle').knuthShuffle;
+var fs       = require('fs');
+var path     = require('path');
+var util     = require('util');
+var open     = require('open');
+var request  = require('request');
+var queue    = require('block-queue');
+var shuffle  = require('knuth-shuffle').knuthShuffle;
 
 var filepath = path.join(__dirname, 'ips.json');
-var content = fs.readFileSync(filepath);
-var ips = shuffle(JSON.parse(content));
+var content  = fs.readFileSync(filepath);
+var ips      = shuffle(JSON.parse(content));
 
 var q = queue(MAX_COCURRENCY, function(ip, done) {
   var uri = util.format('http://%s', ip);
